@@ -19,7 +19,7 @@ class Course {
 			course_content.querySelector('.course-outline-item-title').innerText = section.heading?section.heading:"";
 			course_content.querySelector('.course-outline-item-title-wrapper > .text-block').innerText = section.description?section.description:"";
 			let videoList = course_content.querySelector('.video-item-list');
-			e.lessons.forEach((vi, j, a) => {
+			section.lessons.forEach((vi, j, a) => {
 				let video = course_content.querySelector('.video-item').cloneNode(true);
 				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
 				video.querySelector('.video-length').innerText = vi.duration?vi.duration:"00:00";
