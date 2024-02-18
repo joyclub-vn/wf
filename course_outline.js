@@ -1,11 +1,15 @@
 'use strict'
+function toggle_show(e) {
+	const content = e.parentNode;
+	$(content).toggleClass('show');
+}
 class Course {
 	constructor(outline_id, content_id) {
 		this.course_content = document.getElementById(content_id);
 		this.outline_container = this.course_content.parentNode;
 		this.course_outline = document.getElementById(outline_id);
 		this.outline_ = this.course_outline.querySelector("script").getAttribute("outline");
-		this.course_outline.querySelector("script").parentElement.remove();
+		this.course_outline.remove();
 	}
 	get_outline() {
 		return JSON.parse(this.outline_);
@@ -16,10 +20,15 @@ class Course {
 			// render per section
 			let content = this.course_content.cloneNode(true);
 			content.removeAttribute('id');
-			content.querySelector('.course-outline-item-order').innerText = index + 1;
-			content.querySelector('.course-outline-item-title').innerText = section.heading?section.heading:"";
-			content.querySelector('.course-outline-item-title-wrapper > .text-block').innerText = section.description?section.description:"";
+			// content.setAttribute('fs-accordion-element', 'accordion');
+			let header = content.querySelector('.course-outline-item-header');
+			header.setAttribute('onclick', 'toggle_show(this)');
+			// header.setAttribute('fs-accordion-element', 'trigger');
+			header.querySelector('.course-outline-item-order').innerText = index + 1;
+			header.querySelector('.course-outline-item-title').innerText = section.heading?section.heading:"";
+			header.querySelector('.course-outline-item-title-wrapper > .text-block').innerText = section.description?section.description:"";
 			let videoList = content.querySelector('.video-item-list');
+			// videoList.parentNode.setAttribute('fs-accordion-element', 'content');
 			section.lessons.forEach((vi, j, a) => {
 				let video = content.querySelector('.video-item').cloneNode(true);
 				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
