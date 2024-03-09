@@ -72,7 +72,8 @@ async function get_embed_code(url) {
 		embed_code =
 		  "<iframe src='"+url+"?rel=0&controls=1&autoplay=0&mute=0&start=0' frameborder='0' style='' allow='autoplay; encrypted-media' allowfullscreen=''></iframe>";
 	}
-	const code = $.parseHTML(embed_code);
+	const r = $.parseHTML(embed_code);
+	const code = r[0];
 	code.width = "100%";
 	code.height = "auto";
 	code.style = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto";
@@ -95,10 +96,14 @@ class CourseOutline extends Course {
 			section.lessons.forEach((vi, j, a) => {
 				let video = content.querySelector('.video-item-learning').cloneNode(true);
 				video.querySelector('.video-name-learning').innerText = vi.title?vi.title:"";
+				video.toggleClass("current");
 				// video.setAttribute("data-url", vi.url);
 				video.addEventListener("click", async (event) => {
 					const embed_code = await get_embed_code(vi.url);
-					document.getElementById("course-video-container").innerHTML = embed_code;
+					const container = document.getElementById("course-video-container");
+					container.innerHTML = "";
+					container.append(embed_code);
+
 					console.log("clicked" + vi.url);
 					event.currentTarget.toggleClass("current");
 				});
