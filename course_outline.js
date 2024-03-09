@@ -84,36 +84,36 @@ class CourseOutline extends Course {
 	
 	render() {
 		const outline = this.get_outline();
-	
 		outline.forEach((section, index, a) => {
-		  // render per section
-		  const content = this.course_content.clone(true);
-		  content.removeAttr('id');
-	
-		  const header = content.find('.course-outline-item-header-learning');
-		  header.find('.course-outline-item-order-learning').text(index + 1);
-		  header.find('.course-learning-item-title').text(section.heading ? section.heading : "");
-	
-		  const videoList = content.find('.video-item-list-learning');
-		  section.lessons.forEach((vi, j, a) => {
-			const video = content.find('.video-item-learning').clone(true);
-			video.find('.video-name-learning').text(vi.title ? vi.title : "");
-			video.on('click', async function() {
-			  const embed_code = await get_embed_code(vi.url);
-			  $("#course-video-container").html(embed_code);
-			  console.log("clicked" + vi.url);
-			  $(this).toggleClass("current");
+			// render per section
+			let content = this.course_content.cloneNode(true);
+			content.removeAttribute('id');
+			let header = content.querySelector('.course-outline-item-header-learning');
+			header.querySelector('.course-outline-item-order-learning').innerText = index + 1;
+			header.querySelector('.course-learning-item-title').innerText = section.heading?section.heading:"";
+			// header.querySelector('.course-outline-item-title-wrapper > .text-block').innerText = section.description?section.description:"";
+			let videoList = content.querySelector('.video-item-list-learning');
+			section.lessons.forEach((vi, j, a) => {
+				let video = content.querySelector('.video-item-learning').cloneNode(true);
+				video.querySelector('.video-name-learning').innerText = vi.title?vi.title:"";
+				$(video).removeClass("current");
+				// video.setAttribute("data-url", vi.url);
+				video.addEventListener("click", async function() {
+					const embed_code = await get_embed_code(vi.url);
+					$("#course-video-container").html(embed_code);
+					$(".current").removeClass("current");
+					$(this).toggleClass("current");
+				});
+				if (j === 0) {
+					$(videoList).empty();
+				} 
+				videoList.append(video)
 			});
-			if (j === 0) {
-			  videoList.empty();
-			}
-			videoList.append(video)
-		  });
-	
-		  if (index === 0) {
-			this.outline_container.empty();
-		  }
-		  this.outline_container.append(content);
+			if (index === 0) {
+				$(this.outline_container).empty();
+			} 
+			this.outline_container.append(content)
+			// return course_content;
 		});
-	  }
+	}
 }
