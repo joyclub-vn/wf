@@ -67,7 +67,7 @@ class CourseOutline extends Course {
 				video.querySelector('.video-name-learning').innerText = vi.title?vi.title:"";
 				// video.setAttribute("data-url", vi.url);
 				video.addEventListener("click", (event) => {
-					document.getElementById("course-video-container").setAttribute("src". vi.url);
+					document.getElementById("course-video-container").setAttribute("src", vi.url);
 					console.log("clicked" + vi.url);
 					this.toggleClass("current");
 				});
