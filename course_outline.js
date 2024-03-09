@@ -59,7 +59,7 @@ class CourseOutline extends Course {
 			content.removeAttribute('id');
 			let header = content.querySelector('.course-outline-item-header-learning');
 			header.querySelector('.course-outline-item-order-learning').innerText = index + 1;
-			header.querySelector('.course-outline-item-title').innerText = section.heading?section.heading:"";
+			header.querySelector('.course-learning-item-title').innerText = section.heading?section.heading:"";
 			// header.querySelector('.course-outline-item-title-wrapper > .text-block').innerText = section.description?section.description:"";
 			let videoList = content.querySelector('.video-item-list-learning');
 			section.lessons.forEach((vi, j, a) => {
