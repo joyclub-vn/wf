@@ -57,19 +57,19 @@ class CourseOutline extends Course {
 			// render per section
 			let content = this.course_content.cloneNode(true);
 			content.removeAttribute('id');
-			let header = content.querySelector('.course-outline-item-header');
+			let header = content.querySelector('.course-outline-item-header-learning');
 			header.querySelector('.course-outline-item-order-learning').innerText = index + 1;
 			header.querySelector('.course-outline-item-title').innerText = section.heading?section.heading:"";
 			// header.querySelector('.course-outline-item-title-wrapper > .text-block').innerText = section.description?section.description:"";
-			let videoList = content.querySelector('.video-item-list');
+			let videoList = content.querySelector('.video-item-list-learning');
 			section.lessons.forEach((vi, j, a) => {
-				let video = content.querySelector('.video-item').cloneNode(true);
-				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
-				video.querySelector('.video-length').innerText = vi.duration?vi.duration:"00:00";
+				let video = content.querySelector('.video-item-learning').cloneNode(true);
+				video.querySelector('.video-name-learning').innerText = vi.title?vi.title:"";
 				// video.setAttribute("data-url", vi.url);
 				video.addEventListener("click", (event) => {
 					document.getElementById("course-video-container").setAttribute("src". vi.url);
 					console.log("clicked" + vi.url);
+					this.toggleClass("current");
 				});
 				if (j === 0) {
 					videoList.innerHTML = "";
