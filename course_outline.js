@@ -80,8 +80,6 @@ async function get_embed_code(url) {
   }
 
 class CourseOutline extends Course {
-	// <iframe id="course-video-container" src="https://player.vimeo.com/video/{{ $videouri }}?autoplay=true" width="100%" height="auto" style="min-height: 50%" frameborder="0" allow="autoplay"></iframe>
-	//<iframe src="https://www.youtube.com/embed/8OAFZTiDCy8?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto" allow="autoplay; encrypted-media" allowfullscreen="" title="Massage Guasha nhanh cho người mới bắt đầu"></iframe>
 	
 	render() {
 		const outline = this.get_outline();
@@ -98,10 +96,11 @@ class CourseOutline extends Course {
 				let video = content.querySelector('.video-item-learning').cloneNode(true);
 				video.querySelector('.video-name-learning').innerText = vi.title?vi.title:"";
 				// video.setAttribute("data-url", vi.url);
-				video.addEventListener("click", (event) => {
-					document.getElementById("course-video-container").innerHTML=get_embed_code(vi.url);
+				video.addEventListener("click", async (event) => {
+					const embed_code = await get_embed_code(vi.url);
+					document.getElementById("course-video-container").innerHTML = embed_code;
 					console.log("clicked" + vi.url);
-					$(this).toggleClass("current");
+					event.currentTarget.toggleClass("current");
 				});
 				if (j === 0) {
 					videoList.innerHTML = "";
