@@ -48,8 +48,40 @@ class Course {
 	}
 }
 
+
+async function get_embed_code(url) {
+	let _url = new URL(url);
+	let domain = _url.hostname;
+	let embed_code;
+  
+	switch (domain) {
+	  case "www.youtube.com":
+	  case "youtube.com":
+	  case "youtu.be":
+		const response = await fetch("https://www.youtube.com/oembed?url=" + url + "&format=json");
+		const data = await response.json();
+		embed_code = data["html"];
+		break;
+	  case "vimeo.com":
+		// Use Vimeo's oEmbed API to get the embed code
+		const response2 = await fetch("https://vimeo.com/api/oembed.json?url=" + url);
+		const data2 = await response2.json();
+		embed_code = data2["html"];
+		break;
+	  default:
+		embed_code =
+		  "<iframe src='"+url+"?rel=0&controls=1&autoplay=0&mute=0&start=0' frameborder='0' style='' allow='autoplay; encrypted-media' allowfullscreen=''></iframe>";
+	}
+	const code = $.parseHTML(embed_code);
+	code.width = "100%";
+	code.height = "auto";
+	code.style = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto";
+	return code;
+  }
+
 class CourseOutline extends Course {
 	// <iframe id="course-video-container" src="https://player.vimeo.com/video/{{ $videouri }}?autoplay=true" width="100%" height="auto" style="min-height: 50%" frameborder="0" allow="autoplay"></iframe>
+	//<iframe src="https://www.youtube.com/embed/8OAFZTiDCy8?rel=0&amp;controls=1&amp;autoplay=0&amp;mute=0&amp;start=0" frameborder="0" style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto" allow="autoplay; encrypted-media" allowfullscreen="" title="Massage Guasha nhanh cho người mới bắt đầu"></iframe>
 	
 	render() {
 		const outline = this.get_outline();
@@ -67,9 +99,9 @@ class CourseOutline extends Course {
 				video.querySelector('.video-name-learning').innerText = vi.title?vi.title:"";
 				// video.setAttribute("data-url", vi.url);
 				video.addEventListener("click", (event) => {
-					document.getElementById("course-video-container").setAttribute("src", vi.url);
+					document.getElementById("course-video-container").innerHTML=get_embed_code(vi.url);
 					console.log("clicked" + vi.url);
-					this.toggleClass("current");
+					$(this).toggleClass("current");
 				});
 				if (j === 0) {
 					videoList.innerHTML = "";
