@@ -12,7 +12,7 @@ function getVimeoVideos(projectID) {
 		if (match) {
 			const extractedNumber = parseInt(match[3], 10);
 			const extractedString = match[6];
-			return [extractedNumber, extractedString]
+			return [extractedNumber, str]
 		} else return ["", str];
 	}
 
@@ -52,10 +52,10 @@ function getVimeoVideos(projectID) {
 			lessons: groupedVideos[description],
 		}));
 
-		return JSON.stringify(sections, null, 2);
+		return JSON.stringify(sections);
 	}
 	// Make a GET request to the Vimeo API
-	apiUrl = `https://api.vimeo.com/users/${myID}/projects/${projectID}/videos`
+	apiUrl = `https://api.vimeo.com/users/${myID}/projects/${projectID}/videos?per_page=100&sort=alphabetical`
 	const response = UrlFetchApp.fetch(apiUrl, options)
 	data = JSON.parse(response.getContentText())
 
@@ -77,7 +77,7 @@ function getVimeoVideos(projectID) {
 	// Return the array of video links and titles
 	const videos_ = videos.sort((a, b) => parseFloat(a.pk) - parseFloat(b.pk));
 
-	return `document.currentScript.setAttribute("outline", JSON.stringify(${videos2outline(videos_)}))`;
+	return `<script>document.currentScript.setAttribute("outline", JSON.stringify(${videos2outline(videos_)}))</script>`;
 }
 
 function get_duration(seconds) {
