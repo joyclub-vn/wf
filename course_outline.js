@@ -18,10 +18,10 @@ class Course {
 		const outline = this.get_outline();
 		outline.forEach((section, index, a) => {
 			// render per section
-			let content = this.course_content.cloneNode(true);
+			const content = this.course_content.cloneNode(true);
 			content.removeAttribute('id');
 			// content.setAttribute('fs-accordion-element', 'accordion');
-			let header = content.querySelector('.course-outline-item-header');
+			const header = content.querySelector('.course-outline-item-header');
 			header.setAttribute('onclick', 'toggle_show(this)');
 			// header.setAttribute('fs-accordion-element', 'trigger');
 			header.querySelector('.course-outline-item-order').innerText = index + 1;
@@ -34,16 +34,27 @@ class Course {
 				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
 				const type = vi.type?vi.type:'video';
 				if (type === "video") {
-					video.querySelector('.video-length').innerText = vi.duration?vi.duration:"00:00";
+					const length = video.querySelector('.video-length')
+					length.innerText = vi.duration?vi.duration:"00:00";
+					length.style.display = null
 				} else {
 					const length = video.querySelector('.video-length')
-					if (length) length.remove()
-					video.querySelector('img').outerHTML = [
-						'<svg width="100%" height="100%" class="video-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">',
-							'<path d="M5 4.16C5 4.00536 5.12536 3.88 5.28 3.88H18.72C18.8746 3.88 19 4.00537 19 4.16V19.84C19 19.9946 18.8746 20.12 18.72 20.12H5.28C5.12536 20.12 5 19.9946 5 19.84V4.16Z" stroke="currentColor" stroke-width="1.5"></path>',
-							'<path d="M7.52002 7.79999H16.48" stroke="currentColor" stroke-width="1.5"></path>',
-							'<path d="M7.52002 11.16H12" stroke="currentColor" stroke-width="1.5"></path>',
-						'</svg>'].join('')
+					if (length) length.style.display = 'none'
+					const videoIcon = document.createElement('svg');
+					videoIcon.classList.add('video-icon');
+					videoIcon.setAttribute('width', '100%');
+					videoIcon.setAttribute('height', '100%');
+					videoIcon.setAttribute('viewBox', '0 0 24 24');
+					videoIcon.setAttribute('fill', 'none');
+					videoIcon.innerHTML = `
+					<path d="M5 4.16C5 4.00536 5.12536 3.88 5.28 3.88H18.72C18.8746 3.88 19 4.00537 19 4.16V19.84C19 19.9946 18.8746 20.12 18.72 20.12H5.28C5.12536 20.12 5 19.9946 5 19.84V4.16Z" stroke="currentColor" stroke-width="1.5"></path>
+					<path d="M7.52002 7.79999H16.48" stroke="currentColor" stroke-width="1.5"></path>
+					<path d="M7.52002 11.16H12" stroke="currentColor" stroke-width="1.5"></path>
+					`;
+
+					const imgIcon = video.querySelector('img');
+					video.insertBefore(videoIcon, imgIcon);
+					imgIcon.style.display = 'none';
 				}
 				video.setAttribute("data-url", vi.url);
 				if (j === 0) {
@@ -92,7 +103,7 @@ async function get_embed_code(url) {
 	return code;
   }
 
-class CourseOutline extends Course {
+class CourseOutline extends Course1 {
 	
 	render() {
 		const outline = this.get_outline();
