@@ -32,7 +32,7 @@ class Course {
 			section.lessons.forEach((vi, j, a) => {
 				let video = content.querySelector('.video-item').cloneNode(true);
 				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
-				const type = vi.type?type:'video';
+				const type = vi.type?vi.type:'video';
 				if (type === "video") {
 					video.querySelector('.video-length').innerText = vi.duration?vi.duration:"00:00";
 				} else {
