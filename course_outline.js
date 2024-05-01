@@ -33,27 +33,16 @@ class Course {
 				let video = content.querySelector('.video-item').cloneNode(true);
 				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
 				const type = vi.type?vi.type:'video';
+				const imgIcon = video.querySelector('img');
 				if (type === "video") {
 					const length = video.querySelector('.video-length')
 					length.innerText = vi.duration?vi.duration:"00:00";
 					length.style.display = null
+					imgIcon.src = "https://uploads-ssl.webflow.com/649fb77ad1d9d9bbdbb2d8ec/658a76a5dd7c62ee2ca69803_Video-tertiary.svg"
 				} else {
 					const length = video.querySelector('.video-length')
 					if (length) length.style.display = 'none'
-					const videoIcon = document.createElement('svg');
-					videoIcon.classList.add('video-icon');
-					videoIcon.setAttribute('width', '100%');
-					videoIcon.setAttribute('height', '100%');
-					videoIcon.setAttribute('viewBox', '0 0 24 24');
-					videoIcon.setAttribute('fill', 'none');
-					videoIcon.innerHTML = [
-						'<path d="M5 4.16C5 4.00536 5.12536 3.88 5.28 3.88H18.72C18.8746 3.88 19 4.00537 19 4.16V19.84C19 19.9946 18.8746 20.12 18.72 20.12H5.28C5.12536 20.12 5 19.9946 5 19.84V4.16Z" stroke="currentColor" stroke-width="1.5"></path>',
-						'<path d="M7.52002 7.79999H16.48" stroke="currentColor" stroke-width="1.5"></path>',
-						'<path d="M7.52002 11.16H12" stroke="currentColor" stroke-width="1.5"></path>'].join('');
-
-					const imgIcon = video.querySelector('img');
-					video.insertBefore(videoIcon, imgIcon);
-					imgIcon.style.display = 'none';
+					imgIcon.src = "https://uploads-ssl.webflow.com/649fb77ad1d9d9bbdbb2d8ec/663059459cd98233fadfc62b_googledocs.svg"
 				}
 				video.setAttribute("data-url", vi.url);
 				if (j === 0) {
