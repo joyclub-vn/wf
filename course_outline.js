@@ -53,7 +53,7 @@ class Course {
 					length.style.display = null
 					imgIcon.src = "https://uploads-ssl.webflow.com/649fb77ad1d9d9bbdbb2d8ec/658a76a5dd7c62ee2ca69803_Video-tertiary.svg"
 				}
-				video.setAttribute("data-url", vi.url);
+				// video.setAttribute("data-url", vi.url);
 				if (j === 0) {
 					videoList.innerHTML = "";
 				} 
