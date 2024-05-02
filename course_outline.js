@@ -1,5 +1,6 @@
 'use strict'
 function toggle_show(e) {
+	$(e.parentNode).toggleClass('show');
 	const content = $(e).next('.course-outline-item-content');
 	content.toggleClass('show');
 
