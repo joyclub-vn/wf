@@ -20,8 +20,8 @@ const handleWindowResize = (event) => {
 	  $player.removeClass('sticky-on-top')
 	}
 }
-handleWindowResize()
-$(window).on('resize', handleWindowResize)
+
+$(window).on('load resize', handleWindowResize)
   
 function toggle_show(e) {
 	$(e.parentNode).toggleClass('show');
@@ -150,7 +150,7 @@ class CourseOutline extends Course {
 					
 					if (window.mobileAndTabletCheck()) {
 						if (screenAspectRatio() > 1.5) $("html, body").animate({ scrollTop: 0 }, "slow");
-						if (type === "application/pdf") window.location.open(vi.url)
+						if (type === "application/pdf") window.open(vi.url)
 					} 
 					let embed_code = ''
 					embed_code = type === "application/pdf" ? [`<object data="${vi.url}" type="application/pdf" width="100%" height="100%">`,
