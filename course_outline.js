@@ -149,7 +149,7 @@ class CourseOutline extends Course {
 					const type = vi.type?vi.type:'video';
 					
 					if (window.mobileAndTabletCheck()) {
-						if (screenAspectRatio() > 1.5) $("html, body").animate({ scrollTop: 0 }, "slow");
+						if (screenAspectRatio() <= 1.5) $("html, body").animate({ scrollTop: 0 }, "slow");
 						if (type === "application/pdf") window.open(vi.url)
 					} 
 					let embed_code = ''
