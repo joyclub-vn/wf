@@ -1,6 +1,6 @@
 # wf
-Webflow static
 
+Webflow static
 
 ```html
 <!-- COURSE OUTLINE: GENERATED FROM JSON -->
@@ -9,4 +9,14 @@ Webflow static
 <script>
 a = new CourseOutline("co-content", "course-outline-item-example"); a.render();
 </script>
+```
+
+Add PDF as a lesson
+
+```json
+{
+	"title": "Tài liệu 2: cách chọn màu son cho các tông da",
+	"type": "application/pdf",
+	"url": "url.pdf"
+}
 ```
