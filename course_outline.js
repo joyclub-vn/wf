@@ -76,6 +76,21 @@ class Course {
 					length.innerText = vi.duration?vi.duration:"00:00";
 					length.style.display = null
 					imgIcon.src = "https://uploads-ssl.webflow.com/649fb77ad1d9d9bbdbb2d8ec/658a76a5dd7c62ee2ca69803_Video-tertiary.svg"
+					
+					if (vi.preview) {
+						video.querySelector('a').style = "cursor: pointer"
+						video.addEventListener("click", () => {
+							const modal_id = 'video-preview-lesson'
+							setModalEmbedCode(modal_id, vi.url)
+							MicroModal.show(modal_id, {
+								onShow: modal => console.log(`Open ${vi.url}`),
+								disableScroll: true,
+								awaitOpenAnimation: true,
+							});
+						});
+					} else {
+						video.querySelector('a').style = "cursor: text"
+					}
 				}
 				// video.setAttribute("data-url", vi.url);
 				if (j === 0) {
@@ -122,6 +137,11 @@ async function get_embed_code(url) {
 	code.style = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto";
 	return code;
   }
+
+async function setModalEmbedCode(modal_id, url) {
+	const embedCode = await get_embed_code(url);
+	$(`#${modal_id} .preview-lesson`).html(embedCode);
+}
 
 class CourseOutline extends Course {
 	
@@ -175,3 +195,5 @@ class CourseOutline extends Course {
 		});
 	}
 }
+
+
