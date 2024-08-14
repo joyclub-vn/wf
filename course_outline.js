@@ -64,7 +64,10 @@ class Course {
 			// videoList.parentNode.setAttribute('fs-accordion-element', 'content');
 			section.lessons.forEach((vi, j, a) => {
 				let video = content.querySelector('.video-item').cloneNode(true);
-				video.querySelector('.video-name').innerText = vi.title?vi.title:"";
+				const name = video.querySelector('.video-name')
+				name.innerText = vi.title?vi.title:"";
+				name.classList.remove('link-span')
+				name.classList.add('link-disabled')
 				const type = vi.type?vi.type:'video';
 				const imgIcon = video.querySelector('img');
 				if (type === "application/pdf") {
@@ -78,7 +81,8 @@ class Course {
 					imgIcon.src = "https://uploads-ssl.webflow.com/649fb77ad1d9d9bbdbb2d8ec/658a76a5dd7c62ee2ca69803_Video-tertiary.svg"
 					
 					if (vi.preview) {
-						video.querySelector('a').style = "cursor: pointer"
+						name.classList.remove('link-disabled')
+						name.classList.add('link-span')
 						video.addEventListener("click", () => {
 							const modal_id = 'video-preview-lesson'
 							setModalEmbedCode(modal_id, vi.url)
@@ -88,8 +92,6 @@ class Course {
 								awaitOpenAnimation: true,
 							});
 						});
-					} else {
-						video.querySelector('a').style = "cursor: text"
 					}
 				}
 				// video.setAttribute("data-url", vi.url);
