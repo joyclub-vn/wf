@@ -74,7 +74,7 @@ export class Course {
         this.get_outline(outline_id).then(async outline => {
             this.render(outline)
             // this.outline = outline;
-            if (this.init_first_lesson) {
+            if (this.init_first_lesson && outline.length > 0) {
                 const player = document.getElementById("course-video-container");
                 if (player){
                     const firstSection = outline[0];
@@ -192,6 +192,8 @@ export class CourseOutline extends Course {
                 if (introLink) {
                     const embedCode = await get_embed_code(introLink);
                     document.getElementById("course-video-container").innerHTML = embedCode.outerHTML;
+                    document.querySelectorAll(".current").forEach(el => el.classList.remove("current"));
+                    intro.classList.toggle("current");
                 }
             });
         } else {
