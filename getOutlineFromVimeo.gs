@@ -41,7 +41,7 @@ function getSections(id) {
       duration_time += duration
       console.log(`${heading}: ${lessons.length} | ${duration}`)
     } else {
-      console.log(item)
+      // console.log(item)
     }
   }
   const _folders = JSON.stringify(folders.sort((a, b) => parseFloat(a.pk) - parseFloat(b.pk)))
@@ -65,6 +65,12 @@ function getLessons(api) {
         duration: get_duration(item.video.duration)
       }
       duration += item.video.duration
+      // Check if any tag has "canonical": "preview"
+      if (Array.isArray(item.video.tags) && item.video.tags.some(tag => tag.canonical === "preview")) {
+          video.preview = true; // Set preview to true if the tag is found
+      } else {
+        console.log(item.video.tags)
+      }
       videos.push(video)
     }
   }
