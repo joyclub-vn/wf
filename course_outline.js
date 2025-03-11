@@ -138,7 +138,7 @@ async function get_embed_code(url) {
 	code.height = "auto";
 	code.style = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto";
 	return code;
-  }
+}
 
 async function setModalEmbedCode(modal_id, url) {
 	const embedCode = await get_embed_code(url);

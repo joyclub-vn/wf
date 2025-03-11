@@ -1,7 +1,7 @@
 // Google Apps Script to call Vimeo API and extract video links and titles from a playlist URL
-const scriptProperties = PropertiesService.getScriptProperties();
-const accessToken = scriptProperties.getProperty('Key');
-const myID = scriptProperties.getProperty('ME');
+var scriptProperties = PropertiesService.getScriptProperties();
+var accessToken = scriptProperties.getProperty('Key')
+var myID = scriptProperties.getProperty('ME')
 
 const url = 'https://api.vimeo.com'
 const sregex = /(?<pk>\d+)(.? )(?<heading>.*)/;
@@ -46,7 +46,6 @@ function getSections(id) {
   }
   const _folders = JSON.stringify(folders.sort((a, b) => parseFloat(a.pk) - parseFloat(b.pk)))
   const HTML = `<script>document.currentScript.setAttribute("outline", JSON.stringify(${_folders}))</script>`
-  // return [...folders].map(f => ({ ...f, videos: getVideos(f.pk, f.videos) })).filter(f => f.videos.length > 0)
   return [[HTML, count_videos, get_duration(duration_time)]];
 }
 function getLessons(api) {
