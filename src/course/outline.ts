@@ -151,6 +151,8 @@ export class Course {
             const header = content.querySelector(this.config.headerClass) as HTMLElement;
             const orderElement = header.querySelector(this.config.orderClass) as HTMLElement;
             const titleElement = header.querySelector(this.config.titleClass) as HTMLElement;
+            const descriptionElement = header.querySelector('.course-outline-item-title-wrapper > .text-block') as HTMLElement;
+            if (descriptionElement) descriptionElement.innerText = section.description || "";
             
             header.addEventListener('click', () => this.toggle_show(header));
             orderElement.innerText = (index + 1).toString();
