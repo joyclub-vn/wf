@@ -121,6 +121,8 @@ export class Course {
     protected renderVideo(video: HTMLElement, vi: any, isPreview = false): void {
         const name = video.querySelector(this.config.videoNameClass) as HTMLElement;
         name.innerText = vi.title || "";
+        name.classList.toggle('link-span', false);
+        name.classList.toggle('link-disabled', true);
         const type = vi.type || 'video';
         const imgIcon = video.querySelector('img') as HTMLImageElement;
         imgIcon.src = type === "application/pdf" ? Icon.pdf : Icon.video;
@@ -129,8 +131,8 @@ export class Course {
             const length = video.querySelector('.video-length') as HTMLElement;
             if (length) length.style.display = 'none';
         } else if (isPreview) {
-            name.classList.remove('link-disabled');
-            name.classList.add('link-span');
+            name.classList.toggle('link-disabled', false);
+            name.classList.toggle('link-span', true);
             video.addEventListener("click", () => {
                 const modal_id = 'video-preview-lesson';
                 setModalEmbedCode(modal_id, vi.url);
