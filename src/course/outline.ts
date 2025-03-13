@@ -3,7 +3,21 @@ import { mobileAndTabletCheck, screenAspectRatio } from '../utils'
 
 import MicroModal from 'micromodal';
 
+function isValidUrl(url: string): boolean {
+    try {
+        new URL(url);
+        return true;
+    } catch (e) {
+        console.error('Invalid URL:', url);
+        return false;
+    }
+}
+
 async function get_embed_code(url: string): Promise<HTMLIFrameElement> {
+    if (!isValidUrl(url)) {
+        throw new Error('Invalid URL provided');
+    }
+
     const _url = new URL(url);
     const domain = _url.hostname;
     let embed_code: string;
@@ -13,12 +27,18 @@ async function get_embed_code(url: string): Promise<HTMLIFrameElement> {
         case 'youtube.com':
         case 'youtu.be':
             const response = await fetch(`https://www.youtube.com/oembed?url=${url}&format=json`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             embed_code = data.html;
             break;
         case 'vimeo.com':
             // Use Vimeo's oEmbed API to get the embed code
             const response2 = await fetch(`https://vimeo.com/api/oembed.json?url=${url}`);
+            if (!response2.ok) {
+                throw new Error(`HTTP error! status: ${response2.status}`);
+            }
             const data2 = await response2.json();
             embed_code = data2.html;
             break;
@@ -130,6 +150,16 @@ export class Course {
         const imgIcon = video.querySelector('img') as HTMLImageElement;
         imgIcon.src = type === 'application/pdf' ? Icon.pdf : Icon.video;
 
+        // Check if URL is valid
+        const hasValidUrl = vi.url && isValidUrl(vi.url);
+        if (!hasValidUrl) {
+            name.classList.toggle('link-disabled', true);
+            name.classList.toggle('link-span', false);
+            video.style.opacity = '0.5';
+            video.style.cursor = 'not-allowed';
+            return;
+        }
+
         if (type === 'application/pdf') {
             const length = video.querySelector('.video-length') as HTMLElement;
             if (length) length.style.display = 'none';
@@ -213,6 +243,15 @@ export class CourseOutline extends Course {
         name.innerText = vi.title || "";
         const imgIcon = video.querySelector('img') as HTMLImageElement;
         imgIcon.src = vi.type === "application/pdf" ? Icon.pdf : Icon.video;
+
+        // Check if URL is valid
+        const hasValidUrl = vi.url && isValidUrl(vi.url);
+        if (!hasValidUrl) {
+            name.classList.toggle('link-disabled', true);
+            video.style.opacity = '0.5';
+            video.style.cursor = 'not-allowed';
+            return;
+        }
 
         video.addEventListener("click", async function () {
             const type = vi.type || 'video';
