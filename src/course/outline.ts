@@ -223,7 +223,7 @@ export class CourseOutline extends Course {
         video.addEventListener("click", async function () {
             const type = vi.type || 'video';
 
-            if (mobileAndTabletCheck() && screenAspectRatio() <= 1.5) {
+            if (mobileAndTabletCheck() && screenAspectRatio() >= 1.5) {
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
                 if (type === "application/pdf") window.open(vi.url);
