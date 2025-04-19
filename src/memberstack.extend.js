@@ -1,14 +1,5 @@
 'use strict';
 
-// Link data from CMS does not allow adding pre or post string
-// => cannot add negative data-ms-content
-$('[data-ms-not-content]').each(function() {
-  const $element = $(this);
-  const contentID = $element.data('ms-not-content');
-  $element.data('ms-content', `!${contentID}`);
-  $element.removeAttr('data-ms-not-content');
-});
-
 /* SHOW EMAIL WHEN THERE'S NO NAME, HIDE EMAIL WHEN THERE'S NAME */
 $(document).ready(() => {
 	const msMem = JSON.parse(localStorage.getItem('_ms-mem'));

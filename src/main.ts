@@ -1,4 +1,4 @@
-import protected_page from './member';
+import {protected_page, initCustomMember} from './member';
 import active_nav from './nav';
 window.protected_page = protected_page;
 
@@ -13,3 +13,6 @@ declare global {
         active_nav: typeof active_nav;
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+    initCustomMember();
+});
