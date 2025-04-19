@@ -43,6 +43,8 @@ jobs:
     - name: Commit and push to target repository
       run: |
         cd output_static_files
+        git config --global user.email "laladay.dev@gmail.com"
+        git config --global user.name "LalaDAY Developer"
         git add .
         git commit -m "Update dist folder"
         git push origin main
