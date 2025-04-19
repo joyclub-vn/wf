@@ -6,7 +6,7 @@ module.exports = {
     course: "./src/course.ts"
   },
   output: {
-    filename: "[name].bundle.js",
+    filename: "[name].min.js",
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
